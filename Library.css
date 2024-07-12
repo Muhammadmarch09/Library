@@ -35,3 +35,20 @@ body{
     border: 2px solid red;
     border-radius: 5px;
 }
+
+/* Styling the groups of books  */
+.list-group{
+    position: absolute;
+    top: 100px;
+    left:50px;
+    display: none;
+    
+    
+}
+.list-group-item{
+    font-family: 'Times New Roman', Times, serif;
+    color:gray;
+    border: none;
+    background-color:rgb(191, 245, 227) ;
+    
+}
