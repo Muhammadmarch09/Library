@@ -1,3 +1,37 @@
+/* Common style given to the body  */
+*{
+    border: 0;
+    margin: 0;
+    padding: 0;
+
+}
 body{
-    background-color: wheat;
+    background-color: rgb(191, 245, 227);
+}
+
+/* Giving style to the buttons and position */
+.btn{
+    font-weight: 600;
+}
+.add{
+    position: absolute;
+    top:40px;
+    left: 50px;
+    border: 2px solid greenyellow;
+    border-radius: 5px;
+    
+}
+.check{
+    position: absolute;
+    top: 40px;
+    left:180px ;
+    border: 2px solid green;
+    border-radius: 5px;
+}
+.avai{
+    position: absolute;
+    top: 40px;
+    left: 300px;
+    border: 2px solid red;
+    border-radius: 5px;
 }
