@@ -1,26 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="Library.css">
+    <title>Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .btn {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .book-list {
+            margin-top: 20px;
+        }
+        .book-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .book-item:last-child {
+            border-bottom: none;
+        }
+    </style>
 </head>
 <body>
-    <!-- The works of button  -->
-    <div id="add" class="add"><button type="button" class="btn btn-default"  >Add Books</button></div>
-    <div id="check" class="check"><button type="button" class="btn btn-default"  >Checkout</button></div>
-    <div id="avai" class="avai"><button type="button" class="btn btn-default"  >Available</button></div>
-    <!-- Button works end   -->
-    <ul id="book" class="list-group"> 
-        <li class="list-group-item">AR-RAHIKUL-MAKHTUM</li>
-        <li class="list-group-item">LEARN JS WITH NAYEM</li>
-        <li class="list-group-item">STACK LEARNER</li>
-        <li class="list-group-item">JUSTICE</li>
-        <li class="list-group-item">RICH DAD POOR DAD</li>
-      </ul>
+    <div class="container">
+        <h1>Library Management System</h1>
+        
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" placeholder="Enter book title">
+        </div>
+        
+        <div class="form-group">
+            <label for="author">Author:</label>
+            <input type="text" id="author" placeholder="Enter author name">
+        </div>
+        
+        <button class="btn" onclick="addBook()">Add Book</button>
+        <button class="btn" onclick="checkOutBook()">Check Out Book</button>
+        
+        <div class="book-list">
+            <h2>Available Books</h2>
+            <ul id="book-list"></ul>
+        </div>
+    </div>
 
+    <script>
+        // JavaScript code for library management system
+        class Library {
+            constructor() {
+                this.books = [];
+            }
+            
+            addBook(book) {
+                this.books.push(book);
+            }
+            
+            checkOutBook(title) {
+                let found = false;
+                for (let book of this.books) {
+                    if (book.title === title) {
+                        if (book.isAvailable) {
+                            book.isAvailable = false;
+                            alert(`You have successfully checked out "${title}"`);
+                        } else {
+                            alert(`The book "${title}" is already checked out`);
+                        }
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    alert(`The book "${title}" does not exist in the library`);
+                }
+                this.displayBooks();
+            }
+            
+            listAvailableBooks() {
+                return this.books.filter(book => book.isAvailable);
+            }
+            
+            displayBooks() {
+                const bookList = document.getElementById('book-list');
+                bookList.innerHTML = '';
+                this.listAvailableBooks().forEach(book => {
+                    const li = document.createElement('li');
+                    li.textContent = `${book.title} by ${book.author}`;
+                    bookList.appendChild(li);
+                });
+            }
+        }
+        
+        const library = new Library();
+        
+        function addBook() {
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            library.addBook({ title, author, isAvailable: true });
+            library.displayBooks();
+            document.getElementById('title').value = '';
+            document.getElementById('author').value = '';
+        }
+        
+        function checkOutBook() {
+            const title = document.getElementById('title').value;
+            library.checkOutBook(title);
+            document.getElementById('title').value = '';
+        }
+    </script>
 </body>
-<script src="Library.js"></script>
 </html>
